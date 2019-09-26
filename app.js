@@ -10,13 +10,15 @@ const router = require('./routes');
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://localhost/randomize');
+mongoose.connect('mongodb://localhost/random');
 mongoose.connection 
     .once('open',() => { console.log('db open'); })
     .on('error', () => (error) => console.warn('Warning', error))
 
 
 // Configure bodyparser to handle post requests
+mongoose.set('useFindAndModify', false);
+
 app.use(bodyParser.urlencoded({
     extended: true
  }));
