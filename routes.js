@@ -1,16 +1,23 @@
 const Controller = require('./controllers');
 
 module.exports = (app) => {
-    // app.get('/greeting', Controller.greeting);
-    app.post('/api/users', Controller.createUser);
-    app.get('/api/users', Controller.getUsers);
+    // users
+    app.post('/api/login', Controller.login)
+    app.post('/api/users', Controller.signup);
+    app.get('/api/users', Controller.getAllUsers);
 
+    // lists
     app.get('/api/lists', Controller.getLists);
-    app.get('/api/:id/lists', Controller.getListsOfUser);
-    app.get('/api/:id/currentlist', Controller.getCurrentListOfUser);
-    app.post('/api/lists', Controller.createList);
-    app.post('/api/:id/currentlist', Controller.makeListCurrent);
 
-    // app.get('/api/:list/items', Controller.getListItem);
+    // lists of the user
+        // all
+    app.get('/api/:id/lists', Controller.getListsOfUser);
+    app.post('/api/:id/lists', Controller.createList);
+        //current
+    app.get('/api/:id/current', Controller.getCurrentListOfUser);
+    app.post('/api/:id/current', Controller.makeListCurrent);
+
+    // items
     app.post('/api/:list/items', Controller.createNewItem);
+
 }

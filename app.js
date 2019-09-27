@@ -1,8 +1,11 @@
 const express = require('express');    
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+var cors = require('cors')
 
+const seedDB = require('./seed');
 const User = require('./models/User');
+const List = require('./models/List');
 
 const app = express();
 
@@ -10,7 +13,18 @@ const router = require('./routes');
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://localhost/random');
+
+const eraseDatabaseOnSync = true;
+
+mongoose.connect('mongodb://localhost/random', async () => {
+    if (eraseDatabaseOnSync) {
+        await Promise.all([
+            User.deleteMany({}),
+            List.deleteMany({}),
+        ])
+        seedDB();
+    }
+});
 mongoose.connection 
     .once('open',() => { console.log('db open'); })
     .on('error', () => (error) => console.warn('Warning', error))
@@ -19,6 +33,7 @@ mongoose.connection
 // Configure bodyparser to handle post requests
 mongoose.set('useFindAndModify', false);
 
+app.use(cors())
 app.use(bodyParser.urlencoded({
     extended: true
  }));
