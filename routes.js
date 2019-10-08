@@ -1,5 +1,21 @@
-const Controller = require('./controllers');
+const Controller = require('./controller');
 
+module.exports = (app) => {
+    
+    // USER
+    //app.get('/users', (res, req) => res.send("hello"));
+    app.get('/user/all/:email', Controller.User.getAllUsers);
+
+
+    // LIST
+    app.get('/test', Controller.List.getUserWithPosts)
+    // app.get('/:userId/lists', Controller.List.getListsOfUser);
+    // app.get('/lists', Controller.List.getAllLists);
+    // app.get('/:title', Controller.List.getListByTitle);
+}
+
+
+/*     OLD
 module.exports = (app) => {
     // users
     app.post('/api/login', Controller.login)
@@ -18,6 +34,7 @@ module.exports = (app) => {
     app.post('/api/:id/current', Controller.makeListCurrent);
 
     // items
-    app.post('/api/:list/items', Controller.createNewItem);
+    app.post('/api/:list/item', Controller.createNewItem);
 
 }
+*/

@@ -1,18 +1,20 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+delete mongoose.connection.models['list'];
+
+
 const ListSchema = new Schema({
     title: String,
-    items: [{
-        type: String
-    }],
-    isCurrent: Boolean,
-    belongsTo: {
+    isCurrent: { type: Boolean, default: true},
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }
 });
 
-const List = mongoose.model('list', ListSchema);
 
-module.exports = List;
+
+//const List = mongoose.model('list', ListSchema);
+
+module.exports = mongoose.model('client', ListSchema);

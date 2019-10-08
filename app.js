@@ -6,6 +6,7 @@ var cors = require('cors')
 const seedDB = require('./seed');
 const User = require('./models/User');
 const List = require('./models/List');
+const Item = require('./models/Item');
 
 const app = express();
 
@@ -13,14 +14,14 @@ const router = require('./routes');
 
 mongoose.Promise = global.Promise;
 
-
+// DATABASE
 const eraseDatabaseOnSync = true;
-
 mongoose.connect('mongodb://localhost/random', async () => {
     if (eraseDatabaseOnSync) {
         await Promise.all([
             User.deleteMany({}),
             List.deleteMany({}),
+            Item.deleteMany({}),
         ])
         seedDB();
     }

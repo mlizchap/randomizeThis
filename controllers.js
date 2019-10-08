@@ -51,7 +51,7 @@ exports.signup = (req, res) => {
 }
 
 exports.getAllUsers = (req, res) => {
-    User.find()
+    User.find({})
         .then(users => {
             res.send(users);
         }).catch(err => {
@@ -61,18 +61,8 @@ exports.getAllUsers = (req, res) => {
         })
 }
 
-// exports.createList = (req, res) => {
-//     var newList = new List(req.body);
 
-//     return newList.save()
-//         .then(list => {
-//             res.send("list saved to database");
-//         })
-//         .catch(err => {
-//             res.status(400).send("unable to save to database");
-//         });
-// }
-
+// LISTS
 exports.getLists = (req, res) => {
     List.find()
         .then(lists => {
@@ -129,24 +119,27 @@ exports.getCurrentListOfUser = (req, res) => {
 }
 
 exports.makeListCurrent = (req, res) => {
-    var newList = new List(req.body);
-    
-    // return List.find({ isCurrent: true }, {isCurrent: false})
-    //     .then(() => List.findById({ _id: req.params.id}))
-    //     .then(list => res.send(list))
-
-    return List.find({ _id: req.params.id }, { isCurrent: false })
-        // .then(() => List.find({ _id: !req.params.id}, {isCurrent: false}))
-        .then(result => res.send(result))
+    return List.find({ _id: req.params.id }, { isCurrent: true })
+            .then(() => List.find({ _id: req.params.id , isCurrent: true}, {isCurrent: false} ))
+            .then(result => res.send(result))
         
 }
 
+// ITEMS
 exports.createNewItem = (req, res) => {
-    var newItem = req.body.item;
+    var newItem = new Item({
+        text: req.body.text,
+        belongsTo: req.params.list
+    }) 
 
-    return List.findOneAndUpdate({ _id: req.params.list}, {$push: {items: newItem }})
-        .then(() => List.findById({ _id: req.params.list}))
-        .then(list => res.send(list))
-        .then(() => List.find({ }))
-        
+    return newItem.save()
+        .then(list => {
+            res.send(list);
+        })
+        .catch(err => {
+            res.status(400).send("unable to save to database");
+        });
+}
+exports.getItemsOfList = (req, res) => {
+    return Item.find({ belongsTo: req.params.id })
 }
