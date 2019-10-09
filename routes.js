@@ -1,14 +1,20 @@
 const Controller = require('./controller');
+const verifyToken = require('./middleware/verifyToken');
+
 
 module.exports = (app) => {
     const { User, Auth, List, Item } = Controller;
     
+    //TEST
+    app.get('/test', verifyToken, (req,res) => res.send('HELLO'));
+
     // AUTH
     app.post('/signin', Auth.signin); 
     app.post('/signup', Auth.signup);
 
     // USER
     app.get('/user/all', User.getAllUsers);
+    app.get('/user/info', verifyToken, User.getUserInfo);
 
     // LIST
     app.get('/list/all', List.getListsOfUser);

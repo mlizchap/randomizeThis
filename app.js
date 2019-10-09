@@ -12,6 +12,8 @@ const app = express();
 
 const router = require('./routes');
 
+const verifyToken = require('./middleware/verifyToken');
+
 mongoose.Promise = global.Promise;
 
 // DATABASE
@@ -33,6 +35,8 @@ mongoose.connection
 
 // Configure bodyparser to handle post requests
 mongoose.set('useFindAndModify', false);
+
+// app.get('/hello', verifyToken, (req, res) => res.send("HI"))
 
 app.use(cors())
 app.use(bodyParser.urlencoded({

@@ -4,10 +4,14 @@ const User = require('./models/User');
 const List = require('./models/List');
 const Item = require('./models/Item');
 
+var bcrypt = require('bcryptjs');
+
+const hashPassword = bcrypt.hashSync("a", 8);
+
 const createNewUser = (userName) => {
   const user = new User({
     email: userName,
-    password: 'x',
+    password: hashPassword,
   });
   return user;
 };
