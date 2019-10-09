@@ -1,7 +1,7 @@
 const Model = require('../models');
 
 exports.getAllUsers = (req, res) => {
-    Model.User.find()
+    return Model.User.find()
         .then(users => res.send(users))
         .catch(err => {
             res.status(500).send({

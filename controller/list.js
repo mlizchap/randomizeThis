@@ -12,7 +12,7 @@ exports.getAllLists = (req, res) => {
 }
 
 exports.getListsOfUser = (req, res) => {
-    Model.List.find({ belongsTo: req.params.userId })
+    Model.List.find({ user: req.params.userId })
         .populate('posts').exec((err, posts) => {
             console.log("Populated User " + posts);
         })
@@ -37,10 +37,6 @@ exports.getListByTitle = (req, res) => {
                 .then(i => console.log("ITEM", i))
             res.send(list);
         })
-        // .then(item => {
-        //     console.log(item)
-        // })
-        
         .catch(err => {
             res.status(500).send({
                 message: err.message || "an error occurred while retrieving the lists"
@@ -49,7 +45,7 @@ exports.getListByTitle = (req, res) => {
 }
 
 exports.getUserWithPosts = (req, res) => {
-    return Model.User
+    Model.User
         .findOne({ email: req.params.email })
         .populate('lists').exec((err, lists) => {
             console.log("Populated User " + lists);
@@ -59,7 +55,13 @@ exports.getUserWithPosts = (req, res) => {
   }
 
 // TO DO:
-  // create GITHUB and put code on it
-    // organize code in this file
-    // create README and put backend code on it
+    // write down routes 
+    // create GITHUB and put code on it
     // figure out TODO and put code in it
+        // create README
+            // TOC
+            // file structure
+            // schema
+            // routes
+
+    
