@@ -1,67 +1,27 @@
 const Model = require('../models');
 
-exports.getAllLists = (req, res) => {
-    return res.send("HELLO")
-    // Model.List.find()
-    // .then(lists => res.send(lists))
-    // .catch(err => {
-    //     res.status(500).send({
-    //         message: err.message || "an error occurred while retrieving the lists"
-    //     })
-    // })
-}
-
 exports.getListsOfUser = (req, res) => {
-    Model.List.find({ user: req.params.userId })
-        .populate('posts').exec((err, posts) => {
-            console.log("Populated User " + posts);
-        })
-        .then(lists => {
-            console.log(lists)
-       })
-        .catch(err => {
-            res.status(500).send({
-                message: err.message || "an error occurred while retrieving the lists"
-            })
-        })
+    res.send("get lists of users");
+    // return Model.List.find({ user: req.params.email })
+    //     .populate('posts').exec((err, posts) => {
+    //         console.log("Populated User " + posts);
+    //         res.send(posts);
+    //     })
+    //     .catch(err => {
+    //         res.status(500).send({
+    //             message: err.message || "an error occurred while retrieving the lists"
+    //         })
+    //     })
 }
 
-exports.getListByTitle = (req, res) => {
-    Model.List
-        .find({ title: req.params.title })
-        
-        .then(list => {
-            console.log(list[0]._id)
-            Model.Item
-                .find({ belongsTo: list[0]._id })    
-                .then(i => console.log("ITEM", i))
-            res.send(list);
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: err.message || "an error occurred while retrieving the lists"
-            })
-        })
+exports.createNewList = (req, res) => {
+    res.send("create new list");
 }
 
-exports.getUserWithPosts = (req, res) => {
-    Model.User
-        .findOne({ email: req.params.email })
-        .populate('lists').exec((err, lists) => {
-            console.log("Populated User " + lists);
-        })
-    .catch((err) => console.log(err, "ERR"))
+exports.editList = (req, res) => {
+    res.send("edit list item: " + req.params.listId);
+}
 
-  }
-
-// TO DO:
-    // write down routes 
-    // create GITHUB and put code on it
-    // figure out TODO and put code in it
-        // create README
-            // TOC
-            // file structure
-            // schema
-            // routes
-
-    
+exports.deleteList = (req, res) => {
+    res.send("delete list number: " + req.params.listId);
+}

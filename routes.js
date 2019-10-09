@@ -1,24 +1,26 @@
 const Controller = require('./controller');
 
 module.exports = (app) => {
-    const { User } = Controller;
+    const { User, Auth, List, Item } = Controller;
     
+    // AUTH
+    app.post('/signin', Auth.signin); 
+    app.post('/signup', Auth.signup);
+
     // USER
     app.get('/user/all', User.getAllUsers);
-    app.post('/user/signin', () => console.log('sign in user'));
-    app.post('/user/signup', () => console.log('sign up user'));
 
     // LIST
-    app.get('/list/all/:email', () => console.log('gets all post requests of a partictular '));
-    app.post('/list/create', () => console.log('creates a new list'));
-    app.put('/list/edit/:listId', () => console.log('edits a particular post'));
-    app.delete('/list/delete/:listId', () => console.log('edits a particular post'))
+    app.get('/list/all', List.getListsOfUser);
+    app.post('/list/create', List.createNewList);
+    app.put('/list/edit/:listId', List.editList);
+    app.delete('/list/delete/:listId', List.deleteList)
     
     // ITEMS
-    app.get('/item/all/:postName', () => console.log('gets all items of a particular post'));
-    app.post('/item/create', () => console.log('create a new item'));
-    app.put('/item/edit/:itemId', () => console.log('edits a particular post'));
-    app.delete('item/delete/:itemId', () => console.log('deletes a spcific item'))
+    app.get('/item/all/:postId', Item.getAllPostItems);
+    app.post('/item/create/:postId', Item.createNewPostItem);
+    app.put('/item/edit/:itemId', Item.editItem);
+    app.delete('/item/delete/:itemId', Item.deleteItem);
 }
 
 
