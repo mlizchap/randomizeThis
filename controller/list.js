@@ -1,21 +1,24 @@
 const Model = require('../models');
 
 exports.getListsOfUser = (req, res) => {
-    res.send("get lists of users");
-    // return Model.List.find({ user: req.params.email })
-    //     .populate('posts').exec((err, posts) => {
-    //         console.log("Populated User " + posts);
-    //         res.send(posts);
-    //     })
-    //     .catch(err => {
-    //         res.status(500).send({
-    //             message: err.message || "an error occurred while retrieving the lists"
-    //         })
-    //     })
+    return Model.List.find({ user: req.userId })
+        .then(lists => {
+            res.send(lists)
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "an error occurred while retrieving the lists"
+            })
+        })
 }
 
-exports.createNewList = (req, res) => {
-    res.send("create new list");
+exports.createNewList = async (req, res) => {
+    const newList = new Model.List({
+        title: req.body.title,
+        user: req.userId
+    });
+    await newList.save();
+    await res.send(newList);
 }
 
 exports.editList = (req, res) => {

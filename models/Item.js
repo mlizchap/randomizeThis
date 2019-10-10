@@ -9,6 +9,4 @@ const ItemSechema = new Schema({
     }
 });
 
-const Item = mongoose.model('list', ItemSechema);
-
-module.exports = Item;
+module.exports = mongoose.model('Item', ItemSechema);

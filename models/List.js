@@ -17,4 +17,4 @@ const ListSchema = new Schema({
 
 //const List = mongoose.model('list', ListSchema);
 
-module.exports = mongoose.model('client', ListSchema);
+module.exports = mongoose.model('List', ListSchema);
