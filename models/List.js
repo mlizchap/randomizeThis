@@ -6,7 +6,6 @@ delete mongoose.connection.models['list'];
 
 const ListSchema = new Schema({
     title: String,
-    isCurrent: { type: Boolean, default: true},
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

@@ -15,13 +15,13 @@ module.exports = (app) => {
 
     // LIST
     app.get('/list/all', verifyToken, List.getListsOfUser);
-    app.post('/list/create', verifyToken, List.createNewList);
+    app.post('/list/new', verifyToken, List.createNewList);
     app.put('/list/edit/:listId', List.editList);
     app.delete('/list/delete/:listId', List.deleteList)
     
     // ITEMS
     app.get('/item/all/:postId', Item.getAllPostItems);
-    app.post('/item/create/:postId', Item.createNewPostItem);
+    app.post('/item/new/:postId', Item.createNewPostItem);
     app.put('/item/edit/:itemId', Item.editItem);
     app.delete('/item/delete/:itemId', Item.deleteItem);
 

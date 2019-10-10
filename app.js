@@ -17,7 +17,7 @@ const verifyToken = require('./middleware/verifyToken');
 mongoose.Promise = global.Promise;
 
 // DATABASE
-const eraseDatabaseOnSync = true;
+const eraseDatabaseOnSync = false;
 mongoose.connect('mongodb://localhost/random', async () => {
     if (eraseDatabaseOnSync) {
         await Promise.all([

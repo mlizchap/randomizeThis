@@ -1,11 +1,15 @@
 const Model = require('../models');
 
 exports.getAllPostItems = (req, res) => {
-    res.send("get all items of post: " + req.params.postId);
+    Model.Item.find({ list: req.params.postId })
+        .then(items => res.send(items))
 }
 
 exports.createNewPostItem = (req, res) => {
-    res.send("create new post item" + req.params.postId);
+    new Model.Item({
+        text: req.body.text,
+        list: req.params.postId,
+    }).save().then(newItem => res.send(newItem))
 }
 
 exports.editItem = (req, res) => {

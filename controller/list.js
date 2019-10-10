@@ -4,8 +4,7 @@ exports.getListsOfUser = (req, res) => {
     return Model.List.find({ user: req.userId })
         .then(lists => {
             res.send(lists)
-        })
-        .catch(err => {
+        }).catch(err => {
             res.status(500).send({
                 message: err.message || "an error occurred while retrieving the lists"
             })
@@ -13,12 +12,16 @@ exports.getListsOfUser = (req, res) => {
 }
 
 exports.createNewList = async (req, res) => {
-    const newList = new Model.List({
+    new Model.List({
         title: req.body.title,
         user: req.userId
-    });
-    await newList.save();
-    await res.send(newList);
+    }).save()
+    .then((newList) => res.send(newList))
+    .catch(err => {
+        res.status(500).send({
+            message: err.message || "an error occurred while retrieving the lists"
+        })
+    })
 }
 
 exports.editList = (req, res) => {
